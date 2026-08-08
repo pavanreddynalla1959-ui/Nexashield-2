@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NexaShield | Webinars</title>
+
+    <link rel="stylesheet" href="css\base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container nav">
+            <a id="homeLink" class="brand" href="/">
+                <span class="shield">N</span>
+                <span>Nexa<b>Shield</b></span>
+            </a>
+
+            <button
+                id="allEventsButton"
+                class="btn secondary hidden"
+                type="button"
+            >
+                All webinars
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div id="homeView">
+            <section class="hero">
+                <div class="container hero-grid">
+                    <div>
+                        <span class="eyebrow">
+                            Cyber intelligence in action
+                        </span>
+
+                        <h1>
+                            Build resilience before the
+                            <span class="accent">next threat</span>.
+                        </h1>
+
+                        <p class="lead">
+                            Explore upcoming NexaShield webinars and
+                            reserve your place.
+                        </p>
+
+                        <a class="btn primary" href="#events">
+                            View webinars
+                        </a>
+                    </div>
+
+                    <aside class="hero-card">
+                        <span class="eyebrow">
+                            Webinar programme
+                        </span>
+
+                        <h2>
+                            Live security sessions for modern teams.
+                        </h2>
+
+                        <div class="metric">
+                            <strong id="eventCount">—</strong>
+                            Available webinars
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section id="events">
+                <div class="container">
+                    <span class="eyebrow">
+                        Current programme
+                    </span>
+
+                    <h2>Choose your next webinar</h2>
+
+                    <div id="eventsGrid" class="event-grid">
+                        <div class="loading-panel">
+                            Loading available webinars…
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="detailsView" class="hidden">
+            <section class="container details">
+                <button
+                    id="backButton"
+                    class="text-button"
+                    type="button"
+                >
+                    ← Back to webinars
+                </button>
+
+                <span class="eyebrow">Online webinar</span>
+
+                <h1 id="detailTitle"></h1>
+
+                <p
+                    id="detailDescription"
+                    class="lead"
+                ></p>
+
+                <div class="facts">
+                    <div class="fact">
+                        <span>Date and time</span>
+                        <strong id="detailDate"></strong>
+                    </div>
+
+                    <div class="fact">
+                        <span>Format</span>
+                        <strong>Online webinar</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="container panel registration-panel">
+                <h2>Register for this webinar</h2>
+
+                <p>
+                    Selected:
+                    <strong id="selectedEventName"></strong>
+                </p>
+
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <label>
+                            First name
+
+                            <input
+                                id="firstName"
+                                type="text"
+                                autocomplete="given-name"
+                                required
+                            >
+                        </label>
+
+                        <label>
+                            Last name
+
+                            <input
+                                id="lastName"
+                                type="text"
+                                autocomplete="family-name"
+                                required
+                            >
+                        </label>
+                    </div>
+
+                    <label>
+                        Email address
+
+                        <input
+                            id="email"
+                            type="email"
+                            autocomplete="email"
+                            required
+                        >
+                    </label>
+
+                    <button
+                        id="registerButton"
+                        class="btn primary"
+                        type="submit"
+                    >
+                        Register for webinar
+                    </button>
+
+                    <div
+                        id="formMessage"
+                        class="message"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script src="./js/events-api.js"></script>
+    ./js/events-ui.jsscript>
+    ./js/navigation.jsscript>
+    ./js/registration.jsscript>
+    ./js/app.jsscript>
+</body>
+</html>
