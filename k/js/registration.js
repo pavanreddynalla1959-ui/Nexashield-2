@@ -1,18 +1,14 @@
 window.Registration = {
     showMessage(type, message) {
-        const element =
-            document.getElementById("formMessage");
+        const element = document.getElementById("formMessage");
 
         element.className = `message ${type}`;
         element.textContent = message;
     },
 
     initialize() {
-        const form =
-            document.getElementById("registrationForm");
-
-        const button =
-            document.getElementById("registerButton");
+        const form = document.getElementById("registrationForm");
+        const button = document.getElementById("registerButton");
 
         form.addEventListener("submit", async event => {
             event.preventDefault();
@@ -29,13 +25,26 @@ window.Registration = {
 
             const payload = {
                 readableEventId: webinar.readableEventId,
+                eventId: webinar.id,
                 eventName: webinar.name,
+                eventStartDate: webinar.startDate,
+
+                webinarJoinUrl:
+                    webinar.joinUrl ||
+                    "https://example.com/join-webinar",
+
+                recordingUrl:
+                    webinar.recordingUrl ||
+                    "https://example.com/webinar-recording",
+
                 firstName:
                     document.getElementById("firstName")
                         .value.trim(),
+
                 lastName:
                     document.getElementById("lastName")
                         .value.trim(),
+
                 email:
                     document.getElementById("email")
                         .value.trim()
@@ -45,8 +54,31 @@ window.Registration = {
             button.textContent = "Submitting…";
 
             try {
-                const result =
-                    await EventApi.register(payload);
+                const result = await EventApi.register(payload);
+
+                CIJTriggers.webinarRegistered({
+                    customerId: result.customerId,
+
+                    registrationId:
+                        result.registrationTrackingId,
+
+                    webinarId:
+                        result.eventId,
+
+                    webinarName:
+                        result.eventName,
+
+                    webinarStartDate:
+                        new Date(
+                            result.eventStartDate
+                        ).toISOString(),
+
+                    webinarJoinUrl:
+                        result.webinarJoinUrl,
+
+                    recordingUrl:
+                        result.recordingUrl
+                });
 
                 this.showMessage(
                     "success",
@@ -56,16 +88,19 @@ window.Registration = {
 
                 form.reset();
             } catch (error) {
-                console.error(error);
+                console.error(
+                    "Registration or trigger failed:",
+                    error
+                );
 
                 this.showMessage(
                     "error",
-                    error.message
+                    error.message ||
+                    "Registration could not be completed."
                 );
             } finally {
                 button.disabled = false;
-                button.textContent =
-                    "Register for webinar";
+                button.textContent = "Register for webinar";
             }
         });
     }

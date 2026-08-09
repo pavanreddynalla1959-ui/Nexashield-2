@@ -1,10 +1,6 @@
 window.EventApi = {
     async getEvents() {
-        const response = await fetch("/api/events", {
-            headers: {
-                Accept: "application/json"
-            }
-        });
+        const response = await fetch("/api/events");
 
         const result = await response.json();
 
@@ -14,17 +10,14 @@ window.EventApi = {
             );
         }
 
-        return Array.isArray(result)
-            ? result
-            : result.events || [];
+        return result.events || result;
     },
 
     async register(payload) {
         const response = await fetch("/api/register", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(payload)
         });

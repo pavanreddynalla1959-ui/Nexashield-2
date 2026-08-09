@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+      <script>
+           (function (a, t, i) { var e = "MSEI"; var s = "Analytics"; var o = e + "queue"; a[o] = a[o] || []; var r = a[e] || function (n) { var t = {}; t[s] = {}; function e(e) { while (e.length) { var r = e.pop(); t[s][r] = function (e) { return function () { a[o].push([e, n, arguments]) } }(r) } } var r = "track"; var i = "set"; e([r + "Event", r + "View", r + "Action", i + "Property", i + "User", "initialize", "teardown"]); return t }(i.name); var n = i.name; if (!a[e]) { a[n] = r[s]; a[o].push(["new", n]); setTimeout(function () { var e = "script"; var r = t.createElement(e); r.async = 1; r.src = i.src; var n = t.getElementsByTagName(e)[0]; n.parentNode.insertBefore(r, n) }, 1) } else { a[n] = new r[s] } if (i.user) { a[n].setUser(i.user) } if (i.props) { for (var c in i.props) { a[n].setProperty(c, i.props[c]) } } a[n].initialize(i.cfg) })(window, document, {
+                src: "https://download.pi.dynamics.com/sdk/web/msei-0.js",
+                name: "msdynmkt",
+                cfg: {
+                    ingestionKey:"5a2e31c53eca40fbb3427474546c7c53-fb88e609-b5fb-45c5-a5da-454799060122-6948"
+                }
+            });
+        </script>
+  
     <meta charset="UTF-8">
     <meta
         name="viewport"
@@ -189,6 +199,7 @@
     <script src="./js/events-ui.js"></script>
     <script src="./js/navigation.js"></script>
     <script src="./js/registration.js"></script>
+    <script src = "./js/cij-triggers.js"></script>
     <script src="./js/app.js"></script>
   
     
