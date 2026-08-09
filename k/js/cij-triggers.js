@@ -10,7 +10,7 @@ window.CIJTriggers = {
 
         window.msdynmkt.trackEvent({
             name: "msdynmkt_webinarregistration_033329242",
-            ingestionKey: "https://org4699256e.crm.dynamics.com/main.aspx?appid=11fd5cd2-9786-f111-ab0f-000d3a59d82d&pagetype=entityrecord&etn=msdynmkt_eventmetadata&id=baffb515-a393-f111-8075-000d3a59d82d&formid=1d9e097d-ee10-455c-8d69-507df1d49101",
+            ingestionKey: "5a2e31c53eca40fbb3427474546c7c53-fb88e609-b5fb-45c5-a5da-454799060122-6948",
             version: "1.0.0",
 
             properties: {
@@ -36,7 +36,7 @@ window.CIJTriggers = {
 
         window.msdynmkt.trackEvent({
             name: "msdynmkt_webinarattended_032822006",
-            ingestionKey: "https://org4699256e.crm.dynamics.com/main.aspx?appid=11fd5cd2-9786-f111-ab0f-000d3a59d82d&pagetype=entityrecord&etn=msdynmkt_eventmetadata&id=baffb515-a393-f111-8075-000d3a59d82d&formid=1d9e097d-ee10-455c-8d69-507df1d49101",
+            ingestionKey: "5a2e31c53eca40fbb3427474546c7c53-fb88e609-b5fb-45c5-a5da-454799060122-6948",
             version: "1.0.0",
 
             properties: {
