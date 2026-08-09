@@ -9,16 +9,18 @@ window.Registration = {
     getValidDateTime(value) {
         const date = new Date(value);
 
-        if (value && !Number.isNaN(date.getTime())) {
-            return date.toISOString();
-        }
-
-        return new Date().toISOString();
+        return value && !Number.isNaN(date.getTime())
+            ? date.toISOString()
+            : new Date().toISOString();
     },
 
     initialize() {
         const form = document.getElementById("registrationForm");
         const button = document.getElementById("registerButton");
+        const attendanceButton =
+            document.getElementById("testAttendanceButton");
+        const attendanceStatus =
+            document.getElementById("attendanceStatus");
 
         if (!form || !button) {
             console.error("Registration form elements are missing.");
@@ -53,22 +55,16 @@ window.Registration = {
                     "https://example.com/webinar-recording",
 
                 firstName:
-                    document
-                        .getElementById("firstName")
-                        .value
-                        .trim(),
+                    document.getElementById("firstName")
+                        .value.trim(),
 
                 lastName:
-                    document
-                        .getElementById("lastName")
-                        .value
-                        .trim(),
+                    document.getElementById("lastName")
+                        .value.trim(),
 
                 email:
-                    document
-                        .getElementById("email")
-                        .value
-                        .trim()
+                    document.getElementById("email")
+                        .value.trim()
             };
 
             button.disabled = true;
@@ -77,31 +73,28 @@ window.Registration = {
             try {
                 const result = await EventApi.register(payload);
 
-                console.log("Registration completed:", result);
-
-                const triggerDate = this.getValidDateTime(
-                    result.eventStartDate ||
-                    webinar.startDate
-                );
-
-                CIJTriggers.webinarRegistered({
+                const registrationContext = {
                     customerId:
-                        result.customerId ||
-                        payload.email,
+                        result.customerId || payload.email,
 
                     registrationId:
                         result.registrationTrackingId,
 
                     webinarId:
-                        result.eventId ||
-                        webinar.id,
+                        result.eventId || webinar.id,
 
                     webinarName:
-                        result.eventName ||
-                        webinar.name,
+                        result.eventName || webinar.name
+                };
+
+                CIJTriggers.webinarRegistered({
+                    ...registrationContext,
 
                     webinarStartDate:
-                        triggerDate,
+                        this.getValidDateTime(
+                            result.eventStartDate ||
+                            webinar.startDate
+                        ),
 
                     webinarJoinUrl:
                         result.webinarJoinUrl ||
@@ -112,14 +105,14 @@ window.Registration = {
                         payload.recordingUrl
                 });
 
-                console.log(
-                    "Webinar Registered trigger called."
+                localStorage.setItem(
+                    "testWebinarRegistration",
+                    JSON.stringify(registrationContext)
                 );
 
                 this.showMessage(
                     "success",
-                    result.message ||
-                    "Your registration has been received."
+                    "Registration completed. You can now test attendance."
                 );
 
                 form.reset();
@@ -136,9 +129,47 @@ window.Registration = {
                 );
             } finally {
                 button.disabled = false;
-                button.textContent =
-                    "Register for webinar";
+                button.textContent = "Register for webinar";
             }
+        });
+
+        attendanceButton?.addEventListener("click", () => {
+            const savedValue = localStorage.getItem(
+                "testWebinarRegistration"
+            );
+
+            if (!savedValue) {
+                attendanceStatus.textContent =
+                    "Register for a webinar first.";
+                return;
+            }
+
+            const registration = JSON.parse(savedValue);
+
+            CIJTriggers.webinarAttended({
+                customerId:
+                    registration.customerId,
+
+                registrationId:
+                    registration.registrationId,
+
+                webinarId:
+                    registration.webinarId,
+
+                webinarName:
+                    registration.webinarName,
+
+                attendedOn:
+                    new Date().toISOString(),
+
+                slidesUrl:
+                    "https://example.com/presentation-slides"
+            });
+
+            attendanceStatus.textContent =
+                "Webinar Attended signal submitted.";
+
+            attendanceButton.disabled = true;
         });
     }
 };
